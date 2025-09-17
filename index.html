@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Betting Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-image: url("images/background.gif");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        header {
+            margin: 20px 0 40px;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        .site-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .image-container {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+            transition: transform 0.5s ease;
+        }
+        
+        .site-card:hover .image-container img {
+            transform: scale(1.1);
+        }
+        
+        .site-name {
+            padding: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .site-name i {
+            color: #6a11cb;
+        }
+        
+        footer {
+            color: white;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .image-container {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CHOOSE YOUR BETTING SITE</h1>
+            <p class="subtitle">Select from our trusted partners for the best betting experience</p>
+        </header>
+        
+        <div class="grid">
+            <!-- Betting site cards -->
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/1win.png" alt="1winBet">
+                </div>
+                <div class="site-name"><i class="fas fa-dice"></i> 1WINBET</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/sportybet.png" alt="SportyBet">
+                </div>
+                <div class="site-name"><i class="fas fa-running"></i> SportyBet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/betwinner.png" alt="BETWINNER">
+                </div>
+                <div class="site-name"><i class="fas fa-trophy"></i> BETWINNER</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/premierbet.png" alt="PREMIER Bet">
+                </div>
+                <div class="site-name"><i class="fas fa-crown"></i> PREMIER Bet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/betpawa.png" alt="Pin-Up bet">
+                </div>
+                <div class="site-name"><i class="fas fa-chess-queen"></i> Betpawa</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/wasafibet.png" alt="Wasafibet">
+                </div>
+                <div class="site-name"><i class="fas fa-coins"></i> WasafiBet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/betking.png" alt="BetKing">
+                </div>
+                <div class="site-name"><i class="fas fa-crown"></i> BetKing</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/1xbet.png" alt="1XBET">
+                </div>
+                <div class="site-name"><i class="fas fa-dice-d20"></i> 1XBet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/gwalabet.png" alt="Gwalabet">
+                </div>
+                <div class="site-name"><i class="fas fa-star"></i> Gwalabet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/sportsbet.png" alt="SPORTSBET">
+                </div>
+                <div class="site-name"><i class="fas fa-basketball-ball"></i> Sportsbet</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/bet365.png" alt="Bet365">
+                </div>
+                <div class="site-name"><i class="fas fa-dice"></i> Bet365</div>
+            </div>
+            
+            <div class="site-card" onclick="window.location.href='loading.html'">
+                <div class="image-container">
+                    <img src="images/sportpesa.png" alt="sportpesa">
+                </div>
+                <div class="site-name"><i class="fas fa-medal"></i> sportpesa</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Please gamble responsibly | Must be 18+ to participate</p>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle image loading errors
+        function handleImageError(img) {
+            // Replace broken image with a placeholder
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PGcgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZHk9IjAuMzVlbSIgZmlsbD0iI2FhYSIgZm9udC13ZWlnaHQ9ImJvbGQiPklNQUdFIE5PVDwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZHk9IjEuMzVlbSIgZmlsbD0iI2FhYSI+Rk9VTkQ8L3RleHQ+PC9nPjwvc3ZnPg==';
+            img.alt = 'Image not found';
+        }
+        
+        // Add error handlers to all images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.image-container img');
+            images.forEach(img => {
+                img.onerror = function() {
+                    handleImageError(this);
+                };
+            });
+        });
+    </script>
+</body>
+</html>
