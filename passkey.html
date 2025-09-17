@@ -230,32 +230,17 @@
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     transition: all 0.3s ease;
     z-index: 1000;
-    animation: pulse 2s infinite;
   }
   
   .whatsapp-btn:hover {
     background: var(--whatsapp-green-dark);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
-    animation: none; /* Stop pulsing on hover */
   }
   
   .whatsapp-btn svg {
     width: 20px;
     height: 20px;
-  }
-
-  /* Pulse animation for WhatsApp button */
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-    }
   }
 
   /* Loading overlay */
@@ -378,6 +363,7 @@
     Contact Us
   </a>
 
+  <div id="toast" class="toast" role="status" aria-live="polite">✓</div>
   
   <!-- Loading Overlay -->
   <div class="loading-overlay" id="loadingOverlay">
@@ -393,11 +379,11 @@
   
   // Valid App IDs (must be at least 5 digits)
   const validAppIds = [
-    "70634",
-    "67990",
-    "54441",
-    "91765",
-    "11283"
+    "126345",
+    "66380",
+    "74321",
+    "98005",
+    "10223"
   ];
   
   // Redirect URL for valid App IDs
