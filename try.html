@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enter App ID</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b3ea8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #1f5fd1;
+    width: 90%;
+    max-width: 420px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 80%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #fff;
+    color: #1f5fd1;
+    font-weight: bold;
+    width: 160px;
+}
+
+.getnow-section {
+    margin-top: 30px;
+}
+
+.getnow-section h3 {
+    margin-bottom: 10px;
+}
+
+.getnow-section p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.getnow-btn {
+    margin-top: 15px;
+    background: #fff;
+    color: #6a2bbd;
+    font-weight: bold;
+    width: 160px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1f5fd1;
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 18px;
+    color: #fff;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.whatsapp-btn {
+    margin-top: 25px;
+    background: #25D366;
+    color: #fff;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Enter App ID</h2>
+
+    <input type="text" placeholder="Enter App ID" required>
+
+    <br>
+    <button class="submit-btn" onclick="goNext()">SUBMIT</button>
+
+    <div class="getnow-section">
+        <h3>Unahitaji Passcode Yako?</h3>
+        <p>Bofya GET NOW hapo chini upate passcode yako</p>
+        <button class="getnow-btn" onclick="openModal()">GET NOW</button>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="premiumModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h3>Get Premium Packages</h3>
+
+        <p><strong>BEI NDOGO MIEZI MINGI ZAIDI</strong></p>
+
+        <p>
+            Wiki 1 = 16,000<br>
+            Wiki 2 = 30,000<br>
+            Mwezi (Ofa) = 50,000<br>
+        
+        </p>
+
+        <p>
+            Lipa kwenda M-Pesa Namba<br>
+            <strong>0743871339</strong>
+        </p>
+
+        <p>
+            Jina: <strong>WILLIAM WAKARA</strong><br>
+            Kisha tuma meseji ya muamala WhatsApp ili kupata passcode yako papo hapo
+        </p>
+
+        <button class="whatsapp-btn"
+            onclick="window.open('https://wa.me/255759264425','_blank')">
+            💬 CHAT ON WHATSAPP
+        </button>
+    </div>
+</div>
+
+<script>
+function goNext() {
+    window.location.href = "success.html";
+}
+
+function openModal() {
+    document.getElementById("premiumModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("premiumModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

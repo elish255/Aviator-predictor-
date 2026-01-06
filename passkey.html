@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Aviator — Enter App ID</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enter App ID</title>
+
+<!-- 🔥 Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <style>
-  :root{
-    --bg:#fafafa;
-    --accent:#e31b28; /* red accent like screenshot */
-    --accent-dark:#c71621;
-    --input-bg:#fff;
-    --muted:#777;
-    --success:#2ecc71;
-    --error:#e74c3c;
-    --shadow: 0 18px 30px rgba(0,0,0,0.12);
-    --whatsapp-green: #25D366;
-    --whatsapp-green-dark: #128C7E;
-  }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-  html,body{
-    height:100%;
-    margin:0;
-    font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background:var(--bg);
-    color:#111;
-  }
-
+.container {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    width: 90%;
+    max-width: 420px;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    color: #fff;
+}
   /* center everything */
   .shell {
     min-height:100%;
@@ -42,485 +45,258 @@
     position:relative;
   }
 
-  /* plane icon */
-  .plane-wrap{
-    display:block;
-    margin:0 auto 18px auto;
-    width:120px;
-    height:120px;
-    transform: rotate(12deg);
-    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08));
-  }
   .plane {
     width:100%;
     height:100%;
     object-fit: contain;
   }
 
-  label.title{
-    font-weight:700;
-    letter-spacing:0.03em;
-    margin-bottom:12px;
-    display:block;
-    font-size: 1.2rem;
-  }
+h2 {
+    margin-bottom: 20px;
+}
 
-  /* input capsule */
-  .input-capsule{
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    background:linear-gradient(90deg,var(--accent) 0%, var(--accent-dark) 100%);
-    padding:10px;
-    border-radius:28px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
-    width:100%;
-    box-sizing:border-box;
-  }
-
-  .left-key{
-    width:36px;
-    height:36px;
-    min-width:36px;
-    border-radius:50%;
-    background:rgba(0,0,0,0.06);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-right:10px;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.08) inset;
-  }
-
-  /* white inner input area */
-  .input-inner{
-    display:flex;
-    align-items:center;
-    background:var(--input-bg);
-    height:44px;
-    padding:0 14px;
-    border-radius:20px;
-    flex:1;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-    position:relative;
-  }
-
-  input.app-id{
-    border:0;
-    outline:0;
-    width:100%;
-    font-size:16px;
-    padding:8px 6px;
-    background:transparent;
-    color:#333;
-    font-weight:600;
-  }
-
-  .hint {
-    font-size:13px;
-    color:var(--muted);
-    margin-top:14px;
-    margin-bottom:8px;
-  }
-
-  /* validation states */
-  .input-inner.invalid { box-shadow: 0 10px 18px rgba(231,76,60,0.12); }
-  .input-inner.valid { box-shadow: 0 10px 18px rgba(46,204,113,0.12); }
-
-  .error-text{
-    font-size:13px;
-    color:var(--error);
-    margin-top:8px;
-    min-height:18px;
-    opacity:0;
-    transition:opacity .18s ease;
-  }
-  .error-text.show { opacity:1; }
-
-  /* continue button */
-  .btn {
-    margin:20px auto 0;
-    display:inline-block;
-    background:green;
-    border-radius:10px;
-    padding:12px 26px;
-    font-weight:700;
-    letter-spacing:0.04em;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-    border:0;
-    cursor:pointer;
-    color: black;
-    transition: all 0.3s ease;
-    position: relative;
-    min-width: 140px;
-  }
-  .btn:hover:not([disabled]) {
-    background: var(--accent);
-    background: white;
-  }
-  .btn[disabled]{
-    opacity:0.45;
-    cursor:not-allowed;
-    background:white;
-    color: #333;
-  }
-
-  /* Loading spinner */
-  .btn-loading .btn-text {
-    visibility: hidden;
-    opacity: 0;
-  }
-  
-  .btn-loading::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    border: 3px solid transparent;
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: button-loading-spinner 1s ease infinite;
-  }
-  
-  @keyframes button-loading-spinner {
-    from {
-      transform: rotate(0turn);
-    }
-    to {
-      transform: rotate(1turn);
-    }
-  }
-
-  /* success toast */
-  .toast {
-    position:fixed;
-    left:50%;
-    transform:translateX(-50%);
-    bottom:26px;
-    background: #111;
-    color:#fff;
-    padding:10px 16px;
-    border-radius:8px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
-    font-weight:600;
-    opacity:0;
-    transition:opacity .2s ease, transform .2s ease;
-    pointer-events:none;
-  }
-  .toast.show { opacity:1; transform:translateX(-50%) translateY(-6px); pointer-events:auto; }
-
-  /* WhatsApp contact button */
-  .whatsapp-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    background: var(--whatsapp-green);
-    color: white;
-    border-radius: 50px;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .whatsapp-btn:hover {
-    background: var(--whatsapp-green-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
-  }
-  
-  .whatsapp-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Loading overlay */
-  .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .loading-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .loading-content {
-    text-align: center;
-    color: white;
-    padding: 30px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    max-width: 300px;
+input {
     width: 80%;
-  }
-  
-  .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    margin: 0 auto 20px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  .loading-content h3 {
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #fff;
+    color: #1f5fd1;
+    font-weight: bold;
+    width: 160px;
+}
+
+.getnow-section {
+    margin-top: 30px;
+}
+
+.getnow-section h3 {
     margin-bottom: 10px;
-    font-size: 20px;
-  }
-  
-  .loading-content p {
-    color: #ccc;
+}
+
+.getnow-section p {
     font-size: 14px;
-  }
+    opacity: 0.9;
+}
 
-  /* small responsive tweak for very tall displays like in screenshot */
-  @media (min-height:800px){
-    .card { transform: translateY(-30px); }
-  }
+.getnow-btn {
+    margin-top: 15px;
+    background: #fff;
+    color: #6a2bbd;
+    font-weight: bold;
+    width: 160px;
+}
 
-  /* small shake animation for invalid submit */
-  @keyframes shake {
-    10%, 90% { transform: translateX(-1px); }
-    20%, 80% { transform: translateX(2px); }
-    30%, 50%, 70% { transform: translateX(-4px); }
-    40%, 60% { transform: translateX(4px); }
-  }
-  .shake { animation: shake .45s cubic-bezier(.36,.07,.19,.97); }
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
 
+.modal-content {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 18px;
+    color: #fff;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.whatsapp-btn {
+    margin-top: 25px;
+    background: #25D366;
+    color: #fff;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+}
+/* NEW CSS TO POSITION PLANE ON TOP OF CONTAINER - ADD AT END OF STYLE BLOCK */
+.plane-wrap {
+    position: absolute;
+    top: 130px; /* Adjust this value to position above container */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    z-index: 100;
+}
+
+.container {
+    position: relative;
+    margin-top: 10px; /* Creates space for the plane above */
+}
+
+/* Ensure body flex container works with absolute positioning */
+body {
+    position: relative;
+}
 </style>
 </head>
+
 <body>
-  <div class="shell" role="main">
-    <div class="card" aria-labelledby="app-id-heading">
-
-      <!-- Plane graphic - using your custom image -->
-      <div class="plane-wrap" aria-hidden="true">
-        <img src="images/aviator2.png" alt="Aviator Logo" class="plane">
+  <div class="plane-wrap" aria-hidden="true">
+        <img src="images/aviator.gif" alt="Aviator Logo" class="plane">
+        
       </div>
+<div class="container">
+    <h2>Enter App ID</h2>
 
-      <label id="app-id-heading" class="title">APP ID:</label>
+    <input type="text" id="appIdInput" placeholder="Enter App ID">
+    <br>
+    <button class="submit-btn" onclick="verifyAppID()">SUBMIT</button>
 
-      <div class="input-capsule" aria-hidden="false">
-        <div class="left-key" aria-hidden="true" title="key">
-          <!-- small key icon (SVG) -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="6" cy="12" r="3" stroke="#000" stroke-width="1.2" fill="#000"/>
-            <path d="M9 12h9v2h-3v2h-2" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
+    <div class="error" id="errorMsg">Invalid App ID. Please try again.</div>
 
-        <div class="input-inner" id="inputInner" role="group" aria-labelledby="app-id-heading">
-          <input id="appIdInput" class="app-id" inputmode="text" type="text" placeholder="Enter App ID" aria-describedby="appid-desc" aria-invalid="false" autocomplete="off" />
-        </div>
-      </div>
-
-      <div id="appid-desc" class="hint"></div>
-      <div id="errorText" class="error-text" role="alert"></div>
-
-      <button id="continueBtn" class="btn" disabled>
-        <span class="btn-text">CONTINUE</span>
-      </button>
+    <div class="getnow-section">
+        <h3>Unahitaji Passcode Yako?</h3>
+        <p>Bofya GET NOW hapo chini upate passcode yako</p>
+        <button class="getnow-btn" onclick="openModal()">GET NOW</button>
     </div>
-  </div>
+</div>
 
-  <!-- WhatsApp Contact Button -->
-  <a href="https://wa.link/qpp63a" 
-     class="whatsapp-btn" 
-     target="_blank" 
-     rel="noopener noreferrer"
-     aria-label="Contact us on WhatsApp">
-    <svg viewBox="0 0 32 32" fill="currentColor">
-      <path d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.920a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" />
-    </svg>
-    Contact Us
-  </a>
+<!-- MODAL -->
+<div class="modal" id="premiumModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h3>Get Premium Packages</h3>
 
-  <div id="toast" class="toast" role="status" aria-live="polite">✓</div>
-  
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <h3>Loading</h3>
-      <p>Redirecting to your dashboard...</p>
+        <p><strong>BEI NDOGO MIEZI MINGI ZAIDI</strong></p>
+
+        <p>
+            Wiki 1 = 16,000<br>
+            Wiki 2 = 30,000<br>
+            Mwezi (Ofa) = 50,000
+        </p>
+
+        <p>
+            Lipa kwenda M-Pesa Namba<br>
+            <strong>0743871339</strong>
+        </p>
+
+        <p>
+            Jina: <strong>WILLIAM WAKARA</strong><br>
+            Kisha tuma meseji ya muamala WhatsApp ili kupata passcode yako papo hapo
+        </p>
+
+        <button class="whatsapp-btn"
+            onclick="window.open('https://wa.me/255615180597','_blank')">
+            💬 CHAT ON WHATSAPP
+        </button>
     </div>
-  </div>
+</div>
 
 <script>
-  // ===== CONFIGURATION - Update these values as needed =====
-  
-  // Valid App IDs (must be at least 5 digits)
-  const validAppIds = [
-    "126345",
-    "66380",
-    "74321",
-    "98005",
-    "10223"
-  ];
-  
-  // Redirect URL for valid App IDs
-  const redirectUrl = "dashboard.html";
-  
-  // WhatsApp number for contact (update with your actual number)
-  const whatsappNumber = "+255615180597"; // Replace with your actual WhatsApp number
+/* 🔥 YOUR FIREBASE CONFIG (UNCHANGED) */
+const firebaseConfig = {
+  apiKey: "AIzaSyAP0PrZlJ2fd6Nbtct8KJPnS3-DFZ6CMns",
+  authDomain: "aviator-predictor-49e48.firebaseapp.com",
+  projectId: "aviator-predictor-49e48",
+  storageBucket: "aviator-predictor-49e48.firebasestorage.app",
+  messagingSenderId: "369153377284",
+  appId: "1:369153377284:web:87e48bbff408118a1ae151",
+  measurementId: "G-7WHZWJRP4Z"
+};
 
-  // ===== END CONFIGURATION =====
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  const input = document.getElementById('appIdInput');
-  const inputInner = document.getElementById('inputInner');
-  const err = document.getElementById('errorText');
-  const btn = document.getElementById('continueBtn');
-  const btnText = document.querySelector('.btn-text');
-  const toast = document.getElementById('toast');
-  const whatsappBtn = document.querySelector('.whatsapp-btn');
-  const loadingOverlay = document.getElementById('loadingOverlay');
-
-  // Update WhatsApp href with configured number
-  whatsappBtn.href = `https://wa.me/${whatsappNumber}?text=Hello%20Aviator%20Support,%20How%20can i pay%20inorder%20to Get%20App%20ID`;
-
-  // Helper: set error text
-  function showError(text) {
-    err.textContent = text || '';
-    if (text) {
-      err.classList.add('show');
-      input.setAttribute('aria-invalid', 'true');
-    } else {
-      err.classList.remove('show');
-      input.setAttribute('aria-invalid', 'false');
+/* 📱 DEVICE ID (ONE DEVICE ONLY) */
+function getDeviceId() {
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+        deviceId = crypto.randomUUID();
+        localStorage.setItem("device_id", deviceId);
     }
-  }
+    return deviceId;
+}
 
-  // Live validation on each input
-  input.addEventListener('input', validateInput);
+/* ✅ APP ID VALIDATION + ONE DEVICE LIMIT */
+function verifyAppID() {
+    const appId = document.getElementById("appIdInput").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+    const deviceId = getDeviceId();
 
-  function validateInput() {
-    const v = input.value.trim();
-    if (!v) {
-      inputInner.classList.remove('valid','invalid');
-      showError('');
-      btn.disabled = true;
-      return false;
-    }
-    
-    // Check if it's at least 5 digits
-    if (v.length < 5 || !/^\d+$/.test(v)) {
-      inputInner.classList.remove('valid');
-      inputInner.classList.add('invalid');
-      showError('App ID must be at least 5 digits (numbers only)');
-      btn.disabled = true;
-      return false;
-    }
-    
-    // Enable button when length requirement is met
-    btn.disabled = false;
-    inputInner.classList.remove('invalid');
-    inputInner.classList.add('valid');
-    showError('');
-    return true;
-  }
+    errorMsg.style.display = "none";
 
-  // On Continue button click: validate once more then save
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    
-    // If already loading, don't process again
-    if (btn.classList.contains('btn-loading')) return;
-    
-    const ok = validateInput();
-    if (!ok) {
-      // visual shake for the capsule
-      inputInner.classList.remove('shake');
-      // trigger reflow to restart animation
-      void inputInner.offsetWidth;
-      inputInner.classList.add('shake');
-      return;
+    if (!appId) {
+        errorMsg.innerText = "Please enter App ID";
+        errorMsg.style.display = "block";
+        return;
     }
 
-    const appId = input.value.trim();
-    
-    // Check if it's in the valid list
-    if (!validAppIds.includes(appId)) {
-      showError('This App ID is not recognized MAKE PAYMENTS TO GET VALID APP ID');
-      inputInner.classList.remove('valid');
-      inputInner.classList.add('invalid');
-      return;
-    }
-    
-    // Show loading spinner on button
-    btn.classList.add('btn-loading');
-    btn.disabled = true;
-    input.disabled = true;
+    db.collection("app_ids").doc(appId).get()
+    .then(doc => {
+        if (!doc.exists || doc.data().status !== "active") {
+            errorMsg.innerText = "Invalid App ID. Please try again.";
+            errorMsg.style.display = "block";
+            return;
+        }
 
-    // Save to localStorage
-    localStorage.setItem('aviator_app_id', appId);
+        const data = doc.data();
 
-    // show success toast
-    toast.classList.add('show');
-    
-    // Wait for 1 second to show the toast
-    setTimeout(() => {
-      toast.classList.remove('show');
-      
-      // Show the full-screen loading overlay
-      loadingOverlay.classList.add('active');
-      
-      // Wait for 2 seconds to show the loading screen
-      setTimeout(() => {
-        // Redirect to dashboard after loading completes
-        window.location.href = redirectUrl;
-      }, 2000);
-    }, 1000);
-  });
+        // 🔒 First device → lock App ID
+        if (!data.deviceId) {
+            db.collection("app_ids").doc(appId).update({
+                deviceId: deviceId
+            }).then(() => {
+                window.location.href = "dashboard.html";
+            });
+            return;
+        }
 
-  // Allow Enter key to submit when valid
-  input.addEventListener('keydown', function(ev){
-    if (ev.key === 'Enter') {
-      ev.preventDefault();
-      if (!btn.disabled) btn.click();
-    }
-  });
+        // ✅ Same device
+        if (data.deviceId === deviceId) {
+            window.location.href = "dashboard.html";
+            return;
+        }
 
-  // Accessibility: focus styles
-  input.addEventListener('focus', () => {
-    inputInner.style.boxShadow = inputInner.classList.contains('invalid')
-      ? '0 10px 18px rgba(231,76,60,0.18)'
-      : '0 10px 18px rgba(46,204,113,0.18)';
-  });
-  input.addEventListener('blur', () => {
-    inputInner.style.boxShadow = '';
-  });
+        // ❌ Different device
+        errorMsg.innerText = "This App ID is already used on another device.";
+        errorMsg.style.display = "block";
+    })
+    .catch(() => {
+        errorMsg.innerText = "Connection error. Try again.";
+        errorMsg.style.display = "block";
+    });
+}
 
-  // small enhancement: trim spaces automatically
-  input.addEventListener('change', () => input.value = input.value.trim());
+/* MODAL FUNCTIONS (UNCHANGED) */
+function openModal() {
+    document.getElementById("premiumModal").style.display = "flex";
+}
 
+function closeModal() {
+    document.getElementById("premiumModal").style.display = "none";
+}
 </script>
+
+
 </body>
 </html>
