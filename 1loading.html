@@ -14,7 +14,7 @@
         }
         
         body {
-         background:linear-gradient(135deg,#ff1f2d,#ff3131);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -148,13 +148,16 @@
             .container {
                 padding: 30px 20px;
             }
+            
             h1 {
                 font-size: 1.8rem;
             }
+            
             .spinner-container {
                 width: 100px;
                 height: 100px;
             }
+            
             .aviator-image {
                 width: 50px;
                 height: 50px;
@@ -168,7 +171,7 @@
             <div class="spinner-container">
                 <div class="spinner"></div>
                 <div class="spinner-inner"></div>
-                <img src="images/aviator.png" alt="Aviator" class="aviator-image" onerror="this.src='https://placehold.co/60x60/ff4444/white?text=✈'">
+             <img src="images/aviator.png" alt="Aviator" class="aviator-image">
             </div>
             <h1>CONNECTING TO YOUR SITE</h1>
             <div class="progress-container">
@@ -187,6 +190,7 @@
     </div>
 
     <script>
+        // Countdown timer and redirect
         let seconds = 3;
         const countdownElement = document.getElementById('countdown');
         
@@ -196,7 +200,7 @@
             
             if (seconds <= 0) {
                 clearInterval(countdownInterval);
-                window.location.href = 'dashboard.html';
+                window.location.href = 'passkey.html';
             }
         }, 1000);
     </script>

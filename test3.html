@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aviator Predictor UI</title>
+
+  <!-- Aviator-like Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Oswald', sans-serif;
+    }
+
+    body{
+      background:#000;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      overflow:hidden;
+    }
+
+    .phone{
+      width:370px;
+      max-width:95%;
+      height:780px;
+      background:#f1f1f1;
+      border-radius:40px;
+      overflow:hidden;
+      position:relative;
+      box-shadow:0 0 40px rgba(0,0,0,.8);
+      border:5px solid #111;
+    }
+
+    /* TOP AREA - WITH CURVE ADDED (same as reference image) */
+    .top{
+      background:linear-gradient(135deg,#ff1f2d,#ff3131);
+      height:230px;
+      position:relative;
+      overflow:hidden;
+      /* ADDED: bottom curve matching the image */
+      border-bottom-left-radius: 55px;
+      border-bottom-right-radius: 55px;
+    }
+
+    /* ADDED: shadow effect for the curve depth */
+    .top::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+      border-bottom-left-radius: 55px;
+      border-bottom-right-radius: 55px;
+      pointer-events: none;
+    }
+
+    .top::before{
+      content:'';
+      position:absolute;
+      width:200%;
+      height:100%;
+      background:repeating-linear-gradient(
+        120deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.05) 40px,
+        transparent 40px,
+        transparent 80px
+      );
+      animation:moveBg 8s linear infinite;
+    }
+
+    @keyframes moveBg{
+      from{
+        transform:translateX(0);
+      }
+      to{
+        transform:translateX(-200px);
+      }
+    }
+
+    .menu{
+      position:absolute;
+      top:30px;
+      left:25px;
+      font-size:28px;
+      color:#fff;
+      z-index:2;
+    }
+
+    .wallet{
+      position:absolute;
+      top:30px;
+      right:25px;
+      font-size:24px;
+      color:#fff;
+      z-index:2;
+    }
+
+    .logo{
+      position:absolute;
+      top:65px;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      z-index:2;
+    }
+
+    .logo img{
+      width:110px;
+      object-fit:contain;
+      animation:planeFly 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes planeFly{
+      from{
+        transform:translateY(0px) rotate(-2deg);
+      }
+      to{
+        transform:translateY(-8px) rotate(2deg);
+      }
+    }
+
+    .logo h1{
+      color:#fff;
+      font-size:42px;
+      font-style:italic;
+      font-weight:700;
+      letter-spacing:1px;
+      text-shadow:0 3px 10px rgba(0,0,0,.2);
+    }
+
+    /* CENTER CONTENT */
+    .content{
+      padding:20px;
+      margin-top:-20px;
+      position:relative;
+      z-index:5;
+    }
+
+    .predict-box{
+      width:280px;
+      height:280px;
+      margin:auto;
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    /* ROTATING SPRINKLER */
+    .spinner{
+      position:absolute;
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      border:14px solid rgba(0,255,128,.15);
+      border-top:14px solid #00ff88;
+      animation:spin 2s linear infinite;
+      box-shadow:
+      0 0 20px rgba(0,255,128,.4),
+      inset 0 0 20px rgba(0,255,128,.2);
+    }
+
+    @keyframes spin{
+      100%{
+        transform:rotate(360deg);
+      }
+    }
+
+    .circle{
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      box-shadow:0 10px 30px rgba(0,0,0,.12);
+      z-index:2;
+    }
+
+    #odds{
+      font-size:72px;
+      font-weight:700;
+      color:#111;
+    }
+
+    .label{
+      font-size:24px;
+      color:#999;
+      margin-top:5px;
+    }
+
+    /* BUTTON - REDUCED SIZE to fit auto toggle below it */
+    .btn{
+      width:100%;
+      height:58px;  /* REDUCED from 75px */
+      border:none;
+      border-radius:18px;
+      background:#ff2d2d;
+      color:#fff;
+      font-size:28px;  /* REDUCED from 34px */
+      font-weight:700;
+      cursor:pointer;
+      margin-top:30px;  /* ADJUSTED margin */
+      transition:.2s;
+      box-shadow:0 8px 20px rgba(255,0,0,.25);
+    }
+
+    .btn:hover{
+      transform:scale(1.02);
+    }
+
+    .btn:active{
+      transform:scale(.97);
+    }
+
+    /* CHECKBOX - now fits perfectly below the smaller button */
+    .auto{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      margin-top:20px;  /* ADJUSTED margin for better fit */
+      font-size:24px;   /* SLIGHTLY reduced */
+      color:#444;
+    }
+
+    .auto input{
+      width:26px;
+      height:26px;
+      accent-color:#ff2d2d;
+    }
+
+    /* BOTTOM CARD - WITH ENHANCED CURVE (matching reference image) */
+    .bottom{
+      position:absolute;
+      bottom:25px;
+      left:20px;
+      right:20px;
+      background:#11151d;
+      border-radius:32px;  /* ENHANCED CURVE from 22px to 32px like reference */
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    /* ADDED: smooth glow for bottom card curve */
+    .bottom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,200,100,0.4), transparent);
+      border-radius: 32px;
+    }
+
+    .betting-site{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    /* BETTING SITE IMAGE - CRYSTAL CLEAR (no blur) */
+    .betting-site img{
+      width:65px;
+      height:65px;
+      border-radius:15px;
+      object-fit:cover;
+      background:#1a1f2e;
+      border:2px solid #ffaa33;
+      box-shadow:0 0 0 2px rgba(0,0,0,0.3);
+      /* ensure no blur */
+      filter: none;
+      image-rendering: crisp-edges;
+    }
+
+    .status{
+      color:#00d26a;
+      font-size:24px;  /* ADJUSTED for better proportion */
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .time{
+      color:#fff;
+      font-size:22px;
+      margin-top:6px;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:420px){
+
+      .phone{
+        width:100%;
+        height:100vh;
+        border-radius:0;
+      }
+
+      .logo h1{
+        font-size:34px;
+      }
+
+      #odds{
+        font-size:58px;
+      }
+
+      .btn{
+        font-size:26px;
+        height:54px;
+      }
+
+      .auto{
+        font-size:22px;
+      }
+
+      .status{
+        font-size:22px;
+      }
+
+      .time{
+        font-size:20px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- TOP with curve (border-bottom-radius added) -->
+  <div class="top">
+
+    <div class="menu">☰</div>
+    <div class="wallet">⌂</div>
+
+    <div class="logo">
+
+      <!-- IMPORT YOUR PLANE IMAGE -->
+      <img src="plane.png" alt="Plane">
+
+      <h1>Aviator Predictor</h1>
+    </div>
+
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="predict-box">
+
+      <div class="spinner"></div>
+
+      <div class="circle">
+        <div id="odds">4.12x</div>
+        <div class="label">Predicted coefficient</div>
+      </div>
+
+    </div>
+
+    <!-- Next Odds button (size reduced) -->
+    <button class="btn" onclick="generateOdds()">
+      Next Odds
+    </button>
+
+    <!-- Auto toggle now fits perfectly below the smaller button -->
+    <div class="auto">
+      <input type="checkbox" id="autoUpdate">
+      <label for="autoUpdate">Update automatically</label>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM with enhanced curve (32px radius like reference image) -->
+  <div class="bottom">
+
+    <div class="betting-site">
+
+      <!-- USER CHOSEN BETTING SITE IMAGE - CLEAR (no blur) -->
+      <img id="siteImage" src="betting-site.jpg" alt="Site">
+
+      <div>
+        <div class="status">● Connected</div>
+        <div class="time" id="timer">00 : 00 : 00</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  // ============================================================
+  // RETRIEVE SELECTED BETTING SITE FROM INDEX.HTML (sessionStorage)
+  // This ensures the image shown is the one user clicked
+  // ============================================================
+  let selectedSiteImage = "betting-site.jpg"; // fallback default
+  
+  try {
+    const storedSite = sessionStorage.getItem('selectedBettingSite');
+    if (storedSite) {
+      const siteData = JSON.parse(storedSite);
+      if (siteData && siteData.imgSrc) {
+        selectedSiteImage = siteData.imgSrc;
+      }
+    } else {
+      // try localStorage as fallback
+      const localSite = localStorage.getItem('selectedBettingSite');
+      if (localSite) {
+        const parsed = JSON.parse(localSite);
+        if (parsed && parsed.imgSrc) selectedSiteImage = parsed.imgSrc;
+      }
+    }
+  } catch(e) {
+    console.warn("No stored betting site, using default");
+  }
+  
+  // Apply the selected site image to the img element with fallback handling
+  const siteImgElement = document.getElementById('siteImage');
+  if (siteImgElement) {
+    siteImgElement.src = selectedSiteImage;
+    // Handle image loading error - show a stylish fallback
+    siteImgElement.onerror = function() {
+      this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffaa44' width='65' height='65'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E";
+      this.style.background = "#1e2233";
+      this.style.padding = "4px";
+    };
+  }
+
+  // ============================================================
+  // RANDOM ODDS GENERATOR (same as original but enhanced range)
+  // ============================================================
+  function generateOdds(){
+    // generate realistic odds between 1.20x and 19.99x
+    let value = (Math.random() * 18.8 + 1.2).toFixed(2);
+    document.getElementById('odds').innerHTML = value + 'x';
+  }
+
+  // ============================================================
+  // CONNECTION TIMER - STARTS FROM 0 SECONDS (as requested)
+  // ============================================================
+  let seconds = 0;  // Starting from 0
+
+  function updateTimer(){
+    seconds++;
+    let hrs = String(Math.floor(seconds / 3600)).padStart(2,'0');
+    let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2,'0');
+    let secs = String(seconds % 60).padStart(2,'0');
+    document.getElementById('timer').innerHTML = `${hrs} : ${mins} : ${secs}`;
+  }
+
+  // Start timer immediately, incrementing every second from 0
+  setInterval(updateTimer, 1000);
+  
+  // Initialize timer display to 00 : 00 : 00
+  document.getElementById('timer').innerHTML = "00 : 00 : 00";
+
+  // ============================================================
+  // AUTO UPDATE ODDS (every 3 seconds if checkbox is checked)
+  // ============================================================
+  setInterval(() => {
+    let auto = document.getElementById('autoUpdate');
+    if(auto.checked){
+      generateOdds();
+    }
+  }, 3000);
+
+  // ============================================================
+  // OPTIONAL: Also refresh site image if it changes during session
+  // (for completeness)
+  // ============================================================
+  window.addEventListener('load', function() {
+    // Double-check for any updated storage after load
+    const freshSite = sessionStorage.getItem('selectedBettingSite');
+    if (freshSite) {
+      try {
+        const freshData = JSON.parse(freshSite);
+        if (freshData && freshData.imgSrc && siteImgElement && siteImgElement.src !== freshData.imgSrc) {
+          siteImgElement.src = freshData.imgSrc;
+        }
+      } catch(e) {}
+    }
+  });
+
+</script>
+
+</body>
+</html>

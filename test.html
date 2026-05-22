@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aviator Predictor UI</title>
+
+  <!-- Aviator-like Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Oswald', sans-serif;
+    }
+
+    body{
+      background:#000;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      overflow:hidden;
+    }
+
+    .phone{
+      width:370px;
+      max-width:95%;
+      height:780px;
+      background:#f1f1f1;
+      border-radius:40px;
+      overflow:hidden;
+      position:relative;
+      box-shadow:0 0 40px rgba(0,0,0,.8);
+      border:5px solid #111;
+    }
+
+    /* TOP AREA */
+    .top{
+      background:linear-gradient(135deg,#ff1f2d,#ff3131);
+      height:230px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .top::before{
+      content:'';
+      position:absolute;
+      width:200%;
+      height:100%;
+      background:repeating-linear-gradient(
+        120deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.05) 40px,
+        transparent 40px,
+        transparent 80px
+      );
+      animation:moveBg 8s linear infinite;
+    }
+
+    @keyframes moveBg{
+      from{
+        transform:translateX(0);
+      }
+      to{
+        transform:translateX(-200px);
+      }
+    }
+
+    .menu{
+      position:absolute;
+      top:30px;
+      left:25px;
+      font-size:28px;
+      color:#fff;
+      z-index:2;
+    }
+
+    .wallet{
+      position:absolute;
+      top:30px;
+      right:25px;
+      font-size:24px;
+      color:#fff;
+      z-index:2;
+    }
+
+    .logo{
+      position:absolute;
+      top:65px;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      z-index:2;
+    }
+
+    .logo img{
+      width:110px;
+      object-fit:contain;
+      animation:planeFly 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes planeFly{
+      from{
+        transform:translateY(0px) rotate(-2deg);
+      }
+      to{
+        transform:translateY(-8px) rotate(2deg);
+      }
+    }
+
+    .logo h1{
+      color:#fff;
+      font-size:42px;
+      font-style:italic;
+      font-weight:700;
+      letter-spacing:1px;
+      text-shadow:0 3px 10px rgba(0,0,0,.2);
+    }
+
+    /* CENTER CONTENT */
+    .content{
+      padding:20px;
+      margin-top:-20px;
+      position:relative;
+      z-index:5;
+    }
+
+    .predict-box{
+      width:280px;
+      height:280px;
+      margin:auto;
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    /* ROTATING SPRINKLER */
+    .spinner{
+      position:absolute;
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      border:14px solid rgba(0,255,128,.15);
+      border-top:14px solid #00ff88;
+      animation:spin 2s linear infinite;
+      box-shadow:
+      0 0 20px rgba(0,255,128,.4),
+      inset 0 0 20px rgba(0,255,128,.2);
+    }
+
+    @keyframes spin{
+      100%{
+        transform:rotate(360deg);
+      }
+    }
+
+    .circle{
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      box-shadow:0 10px 30px rgba(0,0,0,.12);
+      z-index:2;
+    }
+
+    #odds{
+      font-size:72px;
+      font-weight:700;
+      color:#111;
+    }
+
+    .label{
+      font-size:24px;
+      color:#999;
+      margin-top:5px;
+    }
+
+    /* BUTTON */
+    .btn{
+      width:100%;
+      height:75px;
+      border:none;
+      border-radius:18px;
+      background:#ff2d2d;
+      color:#fff;
+      font-size:34px;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:40px;
+      transition:.2s;
+      box-shadow:0 8px 20px rgba(255,0,0,.25);
+    }
+
+    .btn:hover{
+      transform:scale(1.02);
+    }
+
+    .btn:active{
+      transform:scale(.97);
+    }
+
+    /* CHECKBOX */
+    .auto{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      margin-top:35px;
+      font-size:26px;
+      color:#444;
+    }
+
+    .auto input{
+      width:28px;
+      height:28px;
+      accent-color:#ff2d2d;
+    }
+
+    /* BOTTOM CARD */
+    .bottom{
+      position:absolute;
+      bottom:-2px;
+      left:0px;
+      right:0px;
+      background:#11151d;
+      border-radius:22px;
+      padding:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .betting-site{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .betting-site img{
+      width:65px;
+      height:65px;
+      border-radius:15px;
+      object-fit:cover;
+    }
+
+    .status{
+      color:#00d26a;
+      font-size:28px;
+      font-weight:600;
+    }
+
+    .time{
+      color:#fff;
+      font-size:24px;
+      margin-top:8px;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:420px){
+
+      .phone{
+        width:100%;
+        height:100vh;
+        border-radius:0;
+      }
+
+      .logo h1{
+        font-size:34px;
+      }
+
+      #odds{
+        font-size:58px;
+      }
+
+      .btn{
+        font-size:28px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- TOP -->
+  <div class="top">
+
+    <div class="menu">☰</div>
+    <div class="wallet">⌂</div>
+
+    <div class="logo">
+
+      <!-- IMPORT YOUR PLANE IMAGE -->
+      <img src="plane.png" alt="Plane">
+
+      <h1>Aviator Predictor</h1>
+    </div>
+
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="predict-box">
+
+      <div class="spinner"></div>
+
+      <div class="circle">
+        <div id="odds">4.12x</div>
+        <div class="label">Predicted coefficient</div>
+      </div>
+
+    </div>
+
+    <button class="btn" onclick="generateOdds()">
+      Next Odds
+    </button>
+
+    <div class="auto">
+      <input type="checkbox" id="autoUpdate">
+      <label for="autoUpdate">Update automatically</label>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+
+    <div class="betting-site">
+
+      <!-- USER CHOSEN BETTING SITE IMAGE -->
+      <img id="siteImage" src="betting-site.jpg" alt="Site">
+
+      <div>
+        <div class="status">● Connected</div>
+        <div class="time" id="timer">00 : 00 : 00</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  // RANDOM ODDS GENERATOR
+  function generateOdds(){
+
+    let value = (Math.random() * 10 + 1).toFixed(2);
+
+    document.getElementById('odds').innerHTML = value + 'x';
+
+  }
+
+  // CONNECTION TIMER
+  let seconds = 0;
+
+  function updateTimer(){
+
+    seconds++;
+
+    let hrs = String(Math.floor(seconds / 3600)).padStart(2,'0');
+    let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2,'0');
+    let secs = String(seconds % 60).padStart(2,'0');
+
+    document.getElementById('timer').innerHTML =
+      `${hrs} : ${mins} : ${secs}`;
+
+  }
+
+  setInterval(updateTimer,1000);
+
+  // AUTO UPDATE ODDS
+  setInterval(()=>{
+
+    let auto = document.getElementById('autoUpdate');
+
+    if(auto.checked){
+      generateOdds();
+    }
+
+  },3000);
+
+</script>
+
+</body>
+</html>
