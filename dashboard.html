@@ -664,7 +664,7 @@
   
   // APK filename - place your APK file in the website root folder (or relative path).
   // Adjust the path if you put it in a subdirectory, e.g., "apks/aviator-predictor.apk"
-  const APK_FILE_PATH = "./Aviator predator pro.apk";   // <-- change to your actual APK filename
+  const APK_FILE_PATH = "./Aviator predictor pro.apk";   // <-- change to your actual APK filename
   
   function showDownloadModal() {
     if (downloadModal) {
@@ -684,7 +684,7 @@
       // Create a temporary anchor element to force download
       const link = document.createElement('a');
       link.href = APK_FILE_PATH;
-      link.download = 'Aviator predator pro.apk';   // suggested filename
+      link.download = 'Aviator predictor pro.apk';   // suggested filename
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
