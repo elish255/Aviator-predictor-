@@ -221,18 +221,20 @@
         }
 
         .operator-logo-wrap {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             background: #f8fafd;
             border-radius: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0.3rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         .operator-logo-wrap img {
-            max-width: 34px;
-            max-height: 34px;
+            max-width: 38px;
+            max-height: 38px;
             object-fit: contain;
         }
 
@@ -309,17 +311,12 @@
             color: #0e3a4f;
             cursor: pointer;
             margin-left: 0.5rem;
+            transition: 0.2s;
         }
 
-        .usdt-address {
-            background: #0b2b3b;
-            color: #b9f3ff;
-            font-family: monospace;
-            padding: 0.8rem 1rem;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-            word-break: break-all;
-            margin: 0.7rem 0;
+        .copy-btn:hover {
+            background: #dce5ef;
+            transform: scale(0.97);
         }
 
         .amount-display {
@@ -346,6 +343,12 @@
             margin: 1rem auto 0;
             display: block;
             text-align: center;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #1a2a6c;
+            color: white;
         }
 
         .toast-msg {
@@ -374,6 +377,14 @@
             }
             .collapse-header, .operator-toggle {
                 padding: 1rem;
+            }
+            .operator-logo-wrap {
+                width: 42px;
+                height: 42px;
+            }
+            .operator-logo-wrap img {
+                max-width: 32px;
+                max-height: 32px;
             }
         }
     </style>
@@ -499,11 +510,11 @@
                 <p style="color: #666; font-size: 0.85rem;">Package: ${packageName}</p>
             </div>
             
-            
-            <!-- M-Pesa Vodacom -->
+           
+            <!-- Vodacom M-Pesa -->
             <div class="operator-item" id="vodacom-item">
                 <button class="operator-toggle" onclick="toggleOperator('vodacom-item')">
-                    <div class="operator-logo-wrap"><i class="fas fa-phone-alt" style="font-size: 1.5rem; color: #4CAF50;"></i></div>
+                    <div class="operator-logo-wrap"><img src="https://brandlogos.net/wp-content/uploads/2025/04/vodacom-logo_brandlogos.net_4uzfe.png" alt="Vodacom"></div>
                     <div><div class="operator-name">Vodacom M-Pesa</div></div>
                     <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -512,27 +523,29 @@
                         <li class="step-row"><span class="step-num">1</span><span>Bonyeza <strong>*150*00#</strong></span></li>
                         <li class="step-row"><span class="step-num">2</span><span>Chagua <strong>4. Lipa kwa M-Pesa</strong></span></li>
                         <li class="step-row"><span class="step-num">3</span><span>Chagua <strong>1. Lipa kwa Simu</strong></span></li>
-                          <li class="step-row"><span class="step-num">4</span><span>Chagua <strong>8. Halopesa</strong></span></li>
-                        <li class="step-row"><span class="step-num">5</span><span>Weka Namba: <span class="step-value">251104229</span><button <li class="step-row"><span class="step-num">3</span><span>Chagua <strong>1. Lipa kwa Simu</strong></span></li>="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
-                        <li class="step-row highlight"><span class="step-num">6</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
-                        <li class="step-row"><span class="step-num">7</span><span>Jina: <strong>AVIATOR PREDICTOR</strong></span></li>
-                        <li class="step-row"><span class="step-num">8</span><span>Weka PIN yako na thibitisha</span></li>
+                         <li class="step-row"><span class="step-num">4</span><span>Chagua <strong>8. Halopesa</strong></span></li>
+                        <li class="step-row"><span class="step-num">5</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
+                        <li class="step-row highlight"><span class="step-num">5</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
+                        <li class="step-row"><span class="step-num">6</span><span>Jina: <strong>AVIATOR PREDICTOR</strong></span></li>
+                        <li class="step-row"><span class="step-num">7</span><span>Weka PIN yako na thibitisha</span></li>
                     </ul>
                 </div>
             </div>
             
-          <!-- Airtel Money -->
+                     <!-- Airtel Money -->
             <div class="operator-item" id="airtel-item">
                 <button class="operator-toggle" onclick="toggleOperator('airtel-item')">
-                    <div class="operator-logo-wrap"><i class="fas fa-wifi" style="font-size: 1.5rem; color: #E63946;"></i></div>
+                    <div class="operator-logo-wrap"><img src="https://nikulipe.com/wp-content/uploads/2022/09/Airtel_logo_PNG1.png" alt="Airtel"></div>
                     <div><div class="operator-name">Airtel Money</div></div>
                     <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="operator-steps">
                     <ul class="steps-list">
                         <li class="step-row"><span class="step-num">1</span><span>Piga <strong>*150*60#</strong></span></li>
-                        <li class="step-row"><span class="step-num">2</span><span>Chagua <strong>5. Fanya Malipo</strong> → <strong>1. Lipa Merchant</strong></span></li>
-                        <li class="step-row highlight"><span class="step-num">3</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
+                        <li class="step-row"><span class="step-num">2</span><span>Chagua <strong>5. Fanya Malipo</strong></span></li>
+                            <li class="step-row"><span class="step-num">3</span><span>Chagua <strong>1.Lipa Merchant ( Mitandao Yote)</strong></span></li>
+                              <li class="step-row"><span class="step-num">4</span><span>Chagua <strong>1. TANQR ( TIPS)</strong></span></li>
+                        <li class="step-row highlight"><span class="step-num">5</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
                         <li class="step-row"><span class="step-num">4</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
                         <li class="step-row"><span class="step-num">5</span><span>Jina: <strong>AVIATOR PREDICTOR</strong> → Thibitisha</span></li>
                     </ul>
@@ -542,7 +555,7 @@
             <!-- Tigo Pesa -->
             <div class="operator-item" id="tigo-item">
                 <button class="operator-toggle" onclick="toggleOperator('tigo-item')">
-                    <div class="operator-logo-wrap"><i class="fas fa-mobile" style="font-size: 1.5rem; color: #FF6B35;"></i></div>
+                    <div class="operator-logo-wrap"><img src="https://www.uminolan.co.tz/assets/images/supa-agent/mixx-by-yas-seeklogo2.png" alt="Tigo"></div>
                     <div><div class="operator-name">Tigo Pesa</div></div>
                     <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -550,9 +563,11 @@
                     <ul class="steps-list">
                         <li class="step-row"><span class="step-num">1</span><span>Piga <strong>*150*01#</strong></span></li>
                         <li class="step-row"><span class="step-num">2</span><span>Chagua <strong>5. Lipa kwa Simu</strong></span></li>
-                        <li class="step-row highlight"><span class="step-num">3</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
-                        <li class="step-row"><span class="step-num">4</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
-                        <li class="step-row"><span class="step-num">5</span><span>Hakikisha jina <strong>AVIATOR PREDICTOR</strong></span></li>
+                          <li class="step-row"><span class="step-num">3</span><span>Chagua <strong>5.Mitandao Mingine</strong></span></li>
+                            <li class="step-row"><span class="step-num">4</span><span>Chagua <strong>1. Halopesa</strong></span></li>
+                        <li class="step-row highlight"><span class="step-num">5</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
+                        <li class="step-row"><span class="step-num">6</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
+                        <li class="step-row"><span class="step-num">7</span><span>Hakikisha jina <strong>AVIATOR PREDICTOR</strong></span></li>
                     </ul>
                 </div>
             </div>
@@ -560,7 +575,7 @@
             <!-- Halopesa -->
             <div class="operator-item" id="halopesa-item">
                 <button class="operator-toggle" onclick="toggleOperator('halopesa-item')">
-                    <div class="operator-logo-wrap"><i class="fas fa-hand-holding-usd" style="font-size: 1.5rem; color: #FF9800;"></i></div>
+                    <div class="operator-logo-wrap"><img src="https://halopesa.co.tz/images/applications-system.png" alt="Halopesa"></div>
                     <div><div class="operator-name">Halopesa</div></div>
                     <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
@@ -568,7 +583,7 @@
                     <ul class="steps-list">
                         <li class="step-row"><span class="step-num">1</span><span>Bonyeza <strong>*150*88#</strong></span></li>
                         <li class="step-row"><span class="step-num">2</span><span>Chagua <strong>5. Lipia Bidhaa</strong></span></li>
-                        <li class="step-row"><span class="step-num">3</span><span>Chagua <strong> HALO PESA</strong></span></li>
+                        <li class="step-row"><span class="step-num">3</span><span>Chagua <strong>3. M-PESA</strong></span></li>
                         <li class="step-row highlight"><span class="step-num">4</span><span>Weka Namba: <span class="step-value">251104229</span><button class="copy-btn" onclick="copyText('251104229')">Copy</button></span></li>
                         <li class="step-row"><span class="step-num">5</span><span>Kiasi: <strong>TSh ${amount.toLocaleString()}</strong></span></li>
                         <li class="step-row"><span class="step-num">6</span><span>Weka Namba ya Siri</span></li>
@@ -577,7 +592,7 @@
                     </ul>
                 </div>
             </div>
-              <!-- USDT Payment -->
+             <!-- USDT Payment -->
             <div class="operator-item open" id="usdt-item">
                 <button class="operator-toggle" onclick="toggleOperator('usdt-item')">
                     <div class="operator-logo-wrap">💎</div>
@@ -597,6 +612,7 @@
                     </ul>
                 </div>
             </div>
+            
             
             <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: #e8f5e9; border-radius: 1rem;">
                 <i class="fab fa-whatsapp" style="color: #25D366; font-size: 1.2rem;"></i>
